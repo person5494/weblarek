@@ -6,6 +6,7 @@ export class CartModel {
   constructor() {}
 
 addItem(product: IProduct): void {
+  if(!this.canAddItem(product.id)) return;
   this.items.push(product);
 };
 removeItem(product: IProduct): void {
