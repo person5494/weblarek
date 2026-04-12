@@ -155,8 +155,9 @@ interface IBuyer {
 
 `setProducts(products: IProduct[]): void` - сохраняет список товаров в модели;
 `getProducts(): IProduct[]` - возвращает список всех товаров;
-`setSelectedProduct(product: IProduct[]): void` - сохраняет выбранный товар;
-`getSelectedProduct(): IProduct[] | null` - возвращает выбранный товар.
+`setSelectedProduct(product: IProduct): void` - сохраняет выбранный товар;
+`getSelectedProduct(): IProduct | null` - возвращает выбранный товар;
+`getProductById(productId: string): IProduct | undefined` - возвращает товар по ID.
 
 #### Класс CartModel
 
@@ -174,4 +175,27 @@ interface IBuyer {
 `getItemsCount(): number` - возвращает количество товаров в корзине;
 `getItems(): IProduct[]` - возвращает текущий список товаров, находящихся в корзине;
 `getTotalPrice(): number` - вычисляет и возвращает общую стоимость всех товаров, находящихся в корзине;
-`canAddItem(product: IProduct): boolean` - проверяет, можно ли добавить товар в корзину. 
+`canAddItem(productId: string): boolean` - проверяет, можно ли добавить товар с переданным ID в корзину;
+`clearCart(): void` - метод очистки всей корзины.
+
+#### Класс BuyerModel
+
+Класс отвечает за хранение информации о покупателе. Он содержит его характеристики. 
+
+Конструктор класса не принимает параметров.
+
+Поля класса:
+`private payment: TPayment = ''` - поле хранящее метод оплаты или null, если метод ещё не выбран;
+`private address: string = ''` - поле для адреса;
+`private email: string = ''` - поле для email;
+`private phone: string = ''` - поле для телефона;
+
+Методы класса:
+
+`update(data: Partial<IBuyer>): void` - метод обновляет только введённые в форму данные;
+`setData(data: IBuyer): void` - метод сохраняет данные из формы;
+`getData(): IBuyer` - метод возвращает данные;
+`clear(): void` - метод очищает данные покупателя;
+`validate(): Partial<Record<keyof IBuyer, string>>` - метод проверяет введённые пользователем данные и возвращает объект, содержащий сообщения об ошибках для некорректно заполненных полей. Ключами объекта являются названия полей, а значениями - текст ошибки.
+
+
