@@ -28,7 +28,6 @@ export interface IProductResponse {
 }
 
 export interface IOrderRequest {
-  // данные покупателя
   payment: string;
   email: string;
   phone: string;
