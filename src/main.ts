@@ -1,7 +1,7 @@
 import './scss/styles.scss';
-import { CatalogModel } from './components/Models/CatalogModel';
-import { CartModel } from './components/Models/CartModel';
-import { BuyerModel } from './components/Models/BuyerModel';
+import { CatalogModel } from './components/models/CatalogModel';
+import { CartModel } from './components/models/CartModel';
+import { BuyerModel } from './components/models/BuyerModel';
 import { apiProducts } from './utils/data';
 import { CommunicationService } from './components/services/CommunicationService';
 import { API_URL } from './utils/constants';
