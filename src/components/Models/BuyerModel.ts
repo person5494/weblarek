@@ -1,10 +1,10 @@
 import { IBuyer, TPayment } from "../../types";
 
 export class BuyerModel {
-  private payment: TPayment = '';
-  private address: string = '';
-  private email: string = '';
-  private phone: string = '';
+  private payment: TPayment = null;
+  private address: string | null = null;
+  private email: string | null = null;
+  private phone: string | null = null;
 
   constructor() {}
 
@@ -24,7 +24,7 @@ export class BuyerModel {
   };
 
   setData(data: IBuyer): void {
-    this.payment = data.payment;
+    this.payment = data.payment ?? null;
     this.address = data.address;
     this.email = data.email;
     this.phone = data.phone;
@@ -40,16 +40,16 @@ export class BuyerModel {
   };
 
   clear(): void {
-      this.payment = '';
-      this.address = '';
-      this.email = '';
-      this.phone = '';
+      this.payment = null;
+      this.address = null;
+      this.email = null;
+      this.phone = null;
     };
   
   validate(): Partial<Record<keyof IBuyer, string>> {
     const errors: Partial<Record<keyof IBuyer, string>> = {};
 
-    if (!this.payment) errors.payment = 'Не выбран способ оплаты';
+    if (this.payment === null) errors.payment = 'Не выбран способ оплаты';
     if (!this.address) errors.address = 'Введите адрес';
     if (!this.email) errors.email = 'Введите email';
     if (!this.phone) errors.phone = 'Введите телефон';

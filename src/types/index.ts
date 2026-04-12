@@ -13,11 +13,31 @@ export interface IProduct {
   description: string;
 }
 
-export type TPayment = 'card' | 'cash' | '';
+export type TPayment = 'card' | 'cash' | null;
 
 export interface IBuyer {
   payment: TPayment;
-  address: string;
+  address: string | null;
+  email: string | null;
+  phone: string | null;
+}
+
+export interface IProductResponse {
+  total: number;
+  items: IProduct[];
+}
+
+export interface IOrderRequest {
+  // данные покупателя
+  payment: string;
   email: string;
   phone: string;
+  address: string;
+  total: number;
+  items: string[];
+}
+
+export interface IOrderResponse {
+  id: string;
+  total: number;
 }
