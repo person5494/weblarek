@@ -48,18 +48,18 @@ if (prod1 && prod2 && prod3) {
   
   //Проверка метода hasItem
   console.log('Есть ли товар с переданным ID в корзине? "true" - да, "false" - нет: ', cart.hasItem(prod1.id));
-  
-  //Проверка метода getItemsCount
-  console.log('Количество товаров в корзине:', cart.getItemsCount(), 'шт');
-
-  //Проверка метода getTotalPrice
-  console.log('Суммарная стоимость товаров в корзине:', cart.getTotalPrice(), 'синапсов');
 
   //Проверка метода removeItem
   console.log('В корзине:', cart.getItemsCount(), 'товара на общую сумму:', cart.getTotalPrice(), 'синапсов до удаления одного продукта');
   cart.removeItem(prod2)
   console.log('В корзине:', cart.getItemsCount(), 'товара на общую сумму:', cart.getTotalPrice(), 'синапсов после удаления одного продукта');
 }
+
+//Проверка метода getItemsCount
+console.log('Количество товаров в корзине:', cart.getItemsCount(), 'шт');
+
+//Проверка метода getTotalPrice
+console.log('Суммарная стоимость товаров в корзине:', cart.getTotalPrice(), 'синапсов');
 
 //Проверка метода clearCart
 console.log('В корзине:', cart.getItemsCount(), 'товара на общую сумму:', cart.getTotalPrice(), 'синапсов перед очисткой');
