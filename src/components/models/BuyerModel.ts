@@ -24,11 +24,8 @@ export class BuyerModel {
   };
 
   getData(): IBuyer {
-    if (!this.payment) {
-      throw new Error('Метод оплаты не выбран');
-    }
     return {
-      payment: this.payment,
+      payment: this.payment as TPayment,
       address: this.address,
       email: this.email,
       phone: this.phone

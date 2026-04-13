@@ -188,7 +188,7 @@ interface IBuyer {
 Конструктор класса не принимает параметров.
 
 Поля класса:
-`private payment: TPayment = ''` - поле хранящее метод оплаты;
+`private payment: TPayment | null = null` - поле хранящее метод оплаты;
 `private address: string = ''` - поле для адреса;
 `private email: string = ''` - поле для email;
 `private phone: string = ''` - поле для телефона;
