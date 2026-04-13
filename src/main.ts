@@ -40,8 +40,8 @@ if (product) {
   //Проверка метода getItems
   console.log('В корзине находятся следующие товары: ', cart.getItems());
   
-  //Проверка метода canAddItem
-  console.log('Можно ли добавить данный продукт в корзину? "true" - да, "false" - нет: ', cart.canAddItem(product.id));
+  //Проверка метода hasItem
+  console.log('Есть ли товар с переданным ID в корзине? "true" - да, "false" - нет: ', cart.hasItem(product.id));
 }
 
 //Проверка метода clearCart
@@ -53,12 +53,10 @@ console.log('Корзина после очистки: ', cart.getItems());
 
 const buyer = new BuyerModel();
 
-//Проверка метода setData
-buyer.setData(
+buyer.update(
   {
-    payment: null,
     address: 'МСК, Ленинский пр., д. 2',
-    email: null,
+    email: '',
     phone: '+79998889988'
   }
 )

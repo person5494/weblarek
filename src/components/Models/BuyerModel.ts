@@ -1,16 +1,16 @@
-import { IBuyer, TPayment } from "../../types";
+import { IBuyer, TPayment, TBuyerErrors } from "../../types";
 
 export class BuyerModel {
-  private payment: TPayment = null;
-  private address: string | null = null;
-  private email: string | null = null;
-  private phone: string | null = null;
+  private payment: TPayment | null = null;
+  private address: string = '';
+  private email: string = '';
+  private phone: string = '';
 
   constructor() {}
 
   update(data: Partial<IBuyer>): void {
     if (data.payment !== undefined) {
-      this.payment = data.payment;
+      this.payment = data.payment ?? null;
     }
     if (data.address !== undefined) {
       this.address = data.address;
@@ -23,14 +23,10 @@ export class BuyerModel {
     }
   };
 
-  setData(data: IBuyer): void {
-    this.payment = data.payment ?? null;
-    this.address = data.address;
-    this.email = data.email;
-    this.phone = data.phone;
-  };
-
   getData(): IBuyer {
+    if (!this.payment) {
+      throw new Error('Метод оплаты не выбран');
+    }
     return {
       payment: this.payment,
       address: this.address,
@@ -41,18 +37,18 @@ export class BuyerModel {
 
   clear(): void {
       this.payment = null;
-      this.address = null;
-      this.email = null;
-      this.phone = null;
+      this.address = '';
+      this.email = '';
+      this.phone = '';
     };
   
-  validate(): Partial<Record<keyof IBuyer, string>> {
-    const errors: Partial<Record<keyof IBuyer, string>> = {};
+  validate(): TBuyerErrors {
+    const errors: TBuyerErrors = {};
 
-    if (this.payment === null) errors.payment = 'Не выбран способ оплаты';
-    if (!this.address) errors.address = 'Введите адрес';
-    if (!this.email) errors.email = 'Введите email';
-    if (!this.phone) errors.phone = 'Введите телефон';
+    if (!this.payment) errors.payment = 'Не выбран способ оплаты';
+    if (!this.address.trim()) errors.address = 'Введите адрес';
+    if (!this.email.trim()) errors.email = 'Введите email';
+    if (!this.phone.trim()) errors.phone = 'Введите телефон';
 
     return errors;
   };

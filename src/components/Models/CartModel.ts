@@ -6,11 +6,11 @@ export class CartModel {
   constructor() {}
 
 addItem(product: IProduct): void {
-  if(!this.canAddItem(product.id)) return;
+  if(this.hasItem(product.id)) return;
   this.items.push(product);
 };
 removeItem(product: IProduct): void {
-  this.items.filter(item => item.id !== product.id);
+  this.items = this.items.filter(item => item.id !== product.id);
 };
 getItemsCount(): number {
   return this.items.length;
@@ -23,8 +23,8 @@ getTotalPrice(): number {
     return sum + (item.price ?? 0);
   }, 0);
 };
-canAddItem(productId: string): boolean {
-  return !this.items.some(item => item.id === productId);
+hasItem(productId: string): boolean {
+  return this.items.some(item => item.id === productId);
 };
 clearCart(): void {
   this.items = [];
