@@ -120,7 +120,7 @@ interface IProduct {
 Тип задаёт допустимое значение способы оплаты, используемого при оформлении заказа в интернет-магазине.
 
 ```TypeScript
-type TPayment = 'card' | 'cash' | '';
+type TPayment = 'card' | 'cash';
 
 ```
 `'card'` - оплата банковской картой;
@@ -137,7 +137,7 @@ type TPayment = 'card' | 'cash' | '';
 
 ```TypeScript
 interface IBuyer {
-  payment: TPayment; // Способ оплаты заказа
+  payment: TPayment | null; // Способ оплаты заказа
   address: string;   // Адрес доставки
   email: string;     // Электронная почта покупателя
   phone: string;     // Номер телефона покупателя

@@ -18,7 +18,7 @@ export type TPayment = 'card' | 'cash';
 export type TBuyerErrors = Partial<Record<keyof IBuyer, string>>;
 
 export interface IBuyer {
-  payment: TPayment;
+  payment: TPayment | null;
   address: string;
   email: string;
   phone: string;

@@ -25,7 +25,7 @@ export class BuyerModel {
 
   getData(): IBuyer {
     return {
-      payment: this.payment as TPayment,
+      payment: this.payment,
       address: this.address,
       email: this.email,
       phone: this.phone
