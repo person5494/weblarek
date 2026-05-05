@@ -1,6 +1,5 @@
 import { Component } from "../base/Component";
 import { ensureElement } from "../../utils/utils";
-import { IEvents } from "../base/Events";
 import { categoryMap } from "../../utils/constants";
 
 
@@ -90,7 +89,6 @@ export type CardBasketActions = {
 }
 
 export interface ICardBasket extends ICardBase {
-  id: string;
   index: number;
 }
 
@@ -98,7 +96,7 @@ export class CardBasket extends CardBase<ICardBasket> {
   protected cardIndex: HTMLElement;
   protected deleteButton: HTMLButtonElement;
 
-  constructor(container: HTMLElement, protected events: IEvents, actions: CardBasketActions) {
+  constructor(container: HTMLElement, actions: CardBasketActions) {
     super(container);
 
     this.cardIndex = ensureElement<HTMLElement>('.basket__item-index', this.container);
@@ -123,7 +121,7 @@ export interface ICardCatalog extends ICardBase {
   image: string;
 }
 
-export class CardCatalog extends CardBase<ICardBase> {
+export class CardCatalog extends CardBase<ICardCatalog> {
   protected cardCategory: HTMLElement;
   protected cardImage: HTMLImageElement;
 
