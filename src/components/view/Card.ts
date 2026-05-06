@@ -1,6 +1,7 @@
 import { Component } from "../base/Component";
 import { ensureElement } from "../../utils/utils";
 import { categoryMap } from "../../utils/constants";
+import { CDN_URL } from "../../utils/constants";
 
 
 // Общие интерфейс и класс
@@ -77,7 +78,8 @@ export class CardFull extends CardBase<ICardFull> {
   }
 
   set image(value: string) {
-    this.cardImage.src = value;
+    const imagePath = value.replace('.svg', '.png');
+    this.cardImage.src = `${CDN_URL}${imagePath}`;
   }
 }
 
@@ -139,6 +141,7 @@ export class CardCatalog extends CardBase<ICardCatalog> {
   }
 
   set image(value: string) {
-    this.cardImage.src = value;
+    const imagePath = value.replace('.svg', '.png');
+    this.cardImage.src = `${CDN_URL}${imagePath}`;
   }
 }
