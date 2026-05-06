@@ -1,16 +1,21 @@
 import { IProduct } from "../../types";
+import { IEvents } from "../base/Events";
 
 export class CartModel {
   private items: IProduct[] = [];
 
-  constructor() {}
+  constructor(protected events: IEvents) {}
 
 addItem(product: IProduct): void {
   if(this.hasItem(product.id)) return;
   this.items.push(product);
+
+  this.events.emit('basket:changed');
 };
 removeItem(product: IProduct): void {
   this.items = this.items.filter(item => item.id !== product.id);
+
+  this.events.emit('basket:changed');
 };
 getItemsCount(): number {
   return this.items.length;
@@ -28,5 +33,7 @@ hasItem(productId: string): boolean {
 };
 clearCart(): void {
   this.items = [];
+  
+  this.events.emit('basket:changed');
 }
 }
