@@ -1,41 +1,40 @@
-import { Component } from "../base/Component";
-import { ensureElement } from "../../utils/utils";
-import { IEvents } from "../base/Events";
-import type { TPayment } from "../../types";
-
-export interface IFormState {
-  valid: boolean;
-  errors: string;
-}
+import { Component } from '../base/Component';
+import { ensureElement } from '../../utils/utils';
+import { IEvents } from '../base/Events';
+import { TPayment } from '../../types';
+import { IFormState, IOrderForm, IContactsForm } from '../../types';
 
 export abstract class FormBase<T> extends Component<T & IFormState> {
   protected form: HTMLFormElement;
   protected submitButton: HTMLButtonElement;
   protected formErrors: HTMLElement;
 
-  constructor(container: HTMLFormElement, protected events: IEvents) {
+  constructor(
+    container: HTMLFormElement,
+    protected events: IEvents,
+  ) {
     super(container);
 
     this.form = container;
 
-    this.submitButton = ensureElement<HTMLButtonElement>('button[type="submit"]', this.container);
+    this.submitButton = ensureElement<HTMLButtonElement>(
+      'button[type="submit"]',
+      this.container,
+    );
 
-    this.formErrors = ensureElement<HTMLElement>('.form__errors', this.container);
+    this.formErrors = ensureElement<HTMLElement>(
+      '.form__errors',
+      this.container,
+    );
+  }
 
-    }
+  set valid(value: boolean) {
+    this.submitButton.disabled = !value;
+  }
 
-    set valid(value: boolean) {
-      this.submitButton.disabled = !value;
-    }
-
-    set errors(value: string) {
-      this.formErrors.textContent = value;
-    }
-}
-
-export interface IOrderForm {
-  payment: TPayment | null;
-  address: string;
+  set errors(value: string) {
+    this.formErrors.textContent = value;
+  }
 }
 
 export class OrderForm extends FormBase<IOrderForm> {
@@ -46,16 +45,25 @@ export class OrderForm extends FormBase<IOrderForm> {
   constructor(container: HTMLFormElement, events: IEvents) {
     super(container, events);
 
-    this.cardButton = ensureElement<HTMLButtonElement>('button[name="card"]', this.container);
-    this.cashButton = ensureElement<HTMLButtonElement>('button[name="cash"]', this.container);
-    this.addressInput = ensureElement<HTMLInputElement>('input[name="address"]', this.container);
+    this.cardButton = ensureElement<HTMLButtonElement>(
+      'button[name="card"]',
+      this.container,
+    );
+    this.cashButton = ensureElement<HTMLButtonElement>(
+      'button[name="cash"]',
+      this.container,
+    );
+    this.addressInput = ensureElement<HTMLInputElement>(
+      'input[name="address"]',
+      this.container,
+    );
 
     this.cardButton.addEventListener('click', () => {
-      this.events.emit('order.payment:change', {payment: 'card',});
+      this.events.emit('order.payment:change', { payment: 'card' });
     });
 
     this.cashButton.addEventListener('click', () => {
-      this.events.emit('order.payment:change', {payment: 'cash',});
+      this.events.emit('order.payment:change', { payment: 'cash' });
     });
 
     this.addressInput.addEventListener('input', () => {
@@ -80,11 +88,6 @@ export class OrderForm extends FormBase<IOrderForm> {
   }
 }
 
-export interface IContactsForm {
-  email: string;
-  phone: string;
-}
-
 export class ContactsForm extends FormBase<IContactsForm> {
   protected emailInput: HTMLInputElement;
   protected phoneInput: HTMLInputElement;
@@ -92,8 +95,14 @@ export class ContactsForm extends FormBase<IContactsForm> {
   constructor(container: HTMLFormElement, events: IEvents) {
     super(container, events);
 
-    this.emailInput = ensureElement<HTMLInputElement>('input[name="email"]', this.container);
-    this.phoneInput = ensureElement<HTMLInputElement>('input[name="phone"]', this.container);
+    this.emailInput = ensureElement<HTMLInputElement>(
+      'input[name="email"]',
+      this.container,
+    );
+    this.phoneInput = ensureElement<HTMLInputElement>(
+      'input[name="phone"]',
+      this.container,
+    );
 
     this.emailInput.addEventListener('input', () => {
       this.events.emit('contacts.email:change', {

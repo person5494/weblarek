@@ -86,14 +86,31 @@ events.on('product:selected', () => {
 
   if (!product) return;
 
+  const isUnavailable = product.price === null;
+  const inBasket = cartModel.hasItem(product.id);
   const cardElement = cloneTemplate<HTMLElement>(cardFullTemplate);
   const card = new CardFull(cardElement, {
-    onAddToBasket: () => {
-      events.emit('basket:add', { id: product.id })
+    onButtonClick: () => {
+      if (inBasket) {
+      events.emit('basket:item-delete', { id: product.id });
+      }
+      else {
+      events.emit('basket:add', { id: product.id });
+      }
+      modal.close();
     }
   });
   modal.render({
-    content: card.render(product)
+    content: card.render({
+      ...product,
+      inBasket,
+      buttonText: isUnavailable
+      ? 'Недоступно'
+      : inBasket
+        ? 'Удалить из корзины'
+        : 'В корзину',
+      buttonDisable: isUnavailable
+    })
   });
 
   modal.open();

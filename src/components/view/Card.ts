@@ -1,15 +1,11 @@
-import { Component } from "../base/Component";
-import { ensureElement } from "../../utils/utils";
-import { categoryMap } from "../../utils/constants";
-import { CDN_URL } from "../../utils/constants";
+import { Component } from '../base/Component';
+import { ensureElement } from '../../utils/utils';
+import { categoryMap } from '../../utils/constants';
+import { setCategoryStyle } from '../../utils/utils';
+import { CDN_URL } from '../../utils/constants';
+import { ICardBase, TCardFullActions, ICardFull, TCardBasketActions, ICardBasket, TCardCatalogActions, ICardCatalog } from '../../types';
 
-
-// Общие интерфейс и класс
-export interface ICardBase {
-  title: string;
-  price: number | null;
-}
-
+// Общий класс
 export abstract class CardBase<T> extends Component<T & ICardBase> {
   protected cardTitle: HTMLElement;
   protected cardPrice: HTMLElement;
@@ -26,51 +22,43 @@ export abstract class CardBase<T> extends Component<T & ICardBase> {
   }
 
   set price(value: number | null) {
-    this.cardPrice.textContent = value === null ? `Бесценно` : `${value} синапсов`
+    this.cardPrice.textContent =
+      value === null ? `Бесценно` : `${value} синапсов`;
   }
 }
 
-//Интерфейс и класс для представления полной карточки товара, которая открывается в модальном окне
-
-export type CardFullActions = {
-  onAddToBasket: () => void;
-}
-
-export interface ICardFull extends ICardBase {
-  category: string;
-  description: string;
-  image: string;
-}
-
-function setCategoryStyle(element: HTMLElement, value: string): void {
-  element.textContent = value;
-  element.className = 'card__category';
-  const categoryClass = categoryMap[value as keyof typeof categoryMap];
-
-  if (categoryClass) {
-    element.classList.add(categoryClass);
-  }
-}
-
+//Класс для представления полной карточки товара, которая открывается в модальном окне
 export class CardFull extends CardBase<ICardFull> {
   protected cardCategory: HTMLElement;
   protected cardImage: HTMLImageElement;
   protected cardDescription: HTMLElement;
   protected cardButton: HTMLButtonElement;
 
-  constructor(container: HTMLElement, actions: CardFullActions) {
+  constructor(container: HTMLElement, actions: TCardFullActions) {
     super(container);
 
-    this.cardCategory = ensureElement<HTMLElement>('.card__category', this.container);
-    this.cardImage = ensureElement<HTMLImageElement>('.card__image', this.container);
-    this.cardDescription = ensureElement<HTMLElement>('.card__text', this.container);
-    this.cardButton = ensureElement<HTMLButtonElement>('.card__button', this.container);
+    this.cardCategory = ensureElement<HTMLElement>(
+      '.card__category',
+      this.container,
+    );
+    this.cardImage = ensureElement<HTMLImageElement>(
+      '.card__image',
+      this.container,
+    );
+    this.cardDescription = ensureElement<HTMLElement>(
+      '.card__text',
+      this.container,
+    );
+    this.cardButton = ensureElement<HTMLButtonElement>(
+      '.card__button',
+      this.container,
+    );
 
-    this.cardButton.addEventListener('click', actions.onAddToBasket);
+    this.cardButton.addEventListener('click', actions.onButtonClick);
   }
 
   set category(value: string) {
-    setCategoryStyle(this.cardCategory, value);
+    setCategoryStyle(this.cardCategory, value, categoryMap);
   }
 
   set description(value: string) {
@@ -81,28 +69,32 @@ export class CardFull extends CardBase<ICardFull> {
     const imagePath = value.replace('.svg', '.png');
     this.cardImage.src = `${CDN_URL}${imagePath}`;
   }
+
+  set buttonText(value: string) {
+    this.cardButton.textContent = value;
+  }
+
+  set buttonDisable(value: boolean) {
+    this.cardButton.disabled = value;
+  }
 }
 
-
-//Интерфейс и класс для представления карточки товара в корзине
-
-export type CardBasketActions = {
-  onDelete: () => void;
-}
-
-export interface ICardBasket extends ICardBase {
-  index: number;
-}
-
+//Класс для представления карточки товара в корзине
 export class CardBasket extends CardBase<ICardBasket> {
   protected cardIndex: HTMLElement;
   protected deleteButton: HTMLButtonElement;
 
-  constructor(container: HTMLElement, actions: CardBasketActions) {
+  constructor(container: HTMLElement, actions: TCardBasketActions) {
     super(container);
 
-    this.cardIndex = ensureElement<HTMLElement>('.basket__item-index', this.container);
-    this.deleteButton = ensureElement<HTMLButtonElement>('.basket__item-delete', this.container);
+    this.cardIndex = ensureElement<HTMLElement>(
+      '.basket__item-index',
+      this.container,
+    );
+    this.deleteButton = ensureElement<HTMLButtonElement>(
+      '.basket__item-delete',
+      this.container,
+    );
 
     this.deleteButton.addEventListener('click', actions.onDelete);
   }
@@ -112,32 +104,28 @@ export class CardBasket extends CardBase<ICardBasket> {
   }
 }
 
-//Интерфейс и класс для представления карточки товара в каталоге на главной странице
-
-export type CardCatalogActions = {
-  onSelect: () => void;
-}
-
-export interface ICardCatalog extends ICardBase {
-  category: string;
-  image: string;
-}
-
+//Класс для представления карточки товара в каталоге на главной странице
 export class CardCatalog extends CardBase<ICardCatalog> {
   protected cardCategory: HTMLElement;
   protected cardImage: HTMLImageElement;
 
-  constructor(container: HTMLElement, actions: CardCatalogActions) {
+  constructor(container: HTMLElement, actions: TCardCatalogActions) {
     super(container);
 
-    this.cardCategory = ensureElement<HTMLElement>('.card__category', this.container);
-    this.cardImage = ensureElement<HTMLImageElement>('.card__image', this.container);
+    this.cardCategory = ensureElement<HTMLElement>(
+      '.card__category',
+      this.container,
+    );
+    this.cardImage = ensureElement<HTMLImageElement>(
+      '.card__image',
+      this.container,
+    );
 
     this.container.addEventListener('click', actions.onSelect);
   }
 
   set category(value: string) {
-    setCategoryStyle(this.cardCategory, value);
+    setCategoryStyle(this.cardCategory, value, categoryMap);
   }
 
   set image(value: string) {

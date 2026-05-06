@@ -38,3 +38,70 @@ export interface IOrderResponse {
   id: string;
   total: number;
 }
+
+export interface IHeader {
+  counter: number;
+}
+
+export interface ICardBase {
+  title: string;
+  price: number | null;
+}
+
+export type TCardFullActions = {
+  onButtonClick: () => void;
+};
+
+export interface ICardFull extends ICardBase {
+  category: string;
+  description: string;
+  image: string;
+  inBasket: boolean;
+  buttonText: string;
+  buttonDisable: boolean;
+}
+
+export type TCardBasketActions = {
+  onDelete: () => void;
+};
+
+export interface ICardBasket extends ICardBase {
+  index: number;
+}
+
+export type TCardCatalogActions = {
+  onSelect: () => void;
+};
+
+export interface ICardCatalog extends ICardBase {
+  category: string;
+  image: string;
+}
+
+export interface IBasket {
+  items: HTMLElement[];
+  total: number;
+}
+
+export interface IFormState {
+  valid: boolean;
+  errors: string;
+}
+
+export interface IOrderForm {
+  payment: TPayment | null;
+  address: string;
+}
+
+export interface IContactsForm {
+  email: string;
+  phone: string;
+}
+
+export interface IModal {
+  content: HTMLElement;
+}
+
+export interface ISuccess {
+  total: number;
+}
