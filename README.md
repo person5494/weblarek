@@ -347,7 +347,7 @@ interface IModal {
 Методы класса:
 
 `set content(value: HTMLElement)` - вставляет переданный контент в модальное окно  
-`open()` - открывает модальное окно и генерирует событие `modal:open`
+`open()` - открывает модальное окно
 `close()` - закрывает модальное окно и очищает контент
 обработчик события click на кнопке закрытия - вызывает метод `close()`
 обработчик события click по оверлею - вызывает метод `close()`
@@ -390,6 +390,7 @@ interface ISuccess {
 interface IBasket {
   items: HTMLElement[]; // DOM-элементы товаров, добавленных в корзину
   total: number; // итоговая стоимость товаров в корзине
+  buttonDisabled: boolean; // состояние доступности кнопки действия
 }
 ```
 
@@ -411,6 +412,7 @@ interface IBasket {
 
 `set items(value: HTMLElement[])` - вставляет список товаров в контейнер корзины  
 `set total(value: number)` - обновляет отображение итоговой стоимости товаров
+`set buttonDisabled(value: boolean)` - включает или отключает кнопку действия
 
 - обработчик события click на кнопке - генерирует событие `basket:submit`
 
@@ -497,7 +499,7 @@ interface ICardFull extends ICardBase {
   image: string; // ссылка на изображение товара
   inBasket: boolean; // находится ли товар в корзине
   buttonText: string; // текст кнопки действия
-  buttonDisable: boolean; // состояние доступности кнопки действия
+  buttonDisabled: boolean; // состояние доступности кнопки действия
 }
 ```
 
@@ -732,8 +734,9 @@ interface IContactsForm {
 #### События представлений
 
 - card:select - выбор карточки товара для просмотра
-- basket:add - нажатие кнопки добавления товара в корзину
-- basket:item-delete - удаление товара из корзины
+- basket:add - добавления товара в корзину при нажатии кнопки "В корзину" в окне отображения выбранного товара
+- basket:delete - удаление товара из корзины при нажатии кнопки "Удалить из корзины" в окне отображения выбранного товара
+- basket:item-delete - удаление товара из корзины при нажатии на кнопку удаления товара из корзины в окне корзины
 - basket:open - открытие корзины
 - basket:submit - переход к оформлению заказа
 
@@ -743,6 +746,6 @@ interface IContactsForm {
 
 - contacts.email:change - изменение email
 - contacts.phone:change - изменение телефона
-- contacts:submit - отправка формы контактов
+- contacts:submit - отправка заказа на сервер
 
 - success:close - закрытие окна успешного оформления заказа

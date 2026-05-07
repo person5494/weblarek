@@ -40,7 +40,6 @@ export class Modal extends Component<IModal> {
 
   open(): void {
     this.container.classList.add('modal_active');
-    this.events.emit('modal:open');
   }
 
   close(): void {

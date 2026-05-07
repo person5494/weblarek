@@ -58,7 +58,7 @@ export interface ICardFull extends ICardBase {
   image: string;
   inBasket: boolean;
   buttonText: string;
-  buttonDisable: boolean;
+  buttonDisabled: boolean;
 }
 
 export type TCardBasketActions = {
@@ -81,6 +81,7 @@ export interface ICardCatalog extends ICardBase {
 export interface IBasket {
   items: HTMLElement[];
   total: number;
+  buttonDisabled: boolean;
 }
 
 export interface IFormState {
